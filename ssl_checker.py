@@ -1,4 +1,5 @@
 import socket
+import ipaddress
 import ssl
 import datetime
 from urllib.parse import urlparse
@@ -101,3 +102,26 @@ def check_security_headers(url):
         return {
             "error": str(e)
         }
+
+def is_valid_ip(ip_address: str) -> bool:
+    """
+    驗證輸入的字串是否為合法的 IP 位址 (IPv4 或 IPv6)
+
+    * 為什麼需要這個函式：確認輸入的目標是否為直接的 IP 位址，這對於某些不支援網域名稱解析的情境很有用。
+    * 技巧：使用標準函式庫 `ipaddress` 來處理，避免自己寫複雜且容易出錯的 Regex。
+
+    Args:
+        ip_address (str): 要驗證的 IP 位址字串
+
+    Returns:
+        bool: 如果是合法的 IP 位址則回傳 True，否則回傳 False
+    """
+    try:
+        # 使用 Python 內建的 ipaddress 工廠函式
+        # 它會自動判斷是 IPv4 或 IPv6，如果格式錯誤會拋出 ValueError
+        ipaddress.ip_address(ip_address)
+        return True
+    except ValueError:
+        # TODO: 如果未來需要區分 IPv4 或 IPv6，可以在這裡做更細緻的錯誤處理或回傳不同代碼
+        return False
+
