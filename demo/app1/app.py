@@ -63,7 +63,7 @@ def load_and_fix_data():
 
 # 3. 主介面
 def main():
-    st.title("🛡️ 無人機資安監控儀表板 (BlueMagpie Edition)")
+    st.title("🛡️ 無人機資安監控儀表板 (中揚資訊股份有限公司彙整)")
     df = load_and_fix_data()
     if df.empty: return
 
